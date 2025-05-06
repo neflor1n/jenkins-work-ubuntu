@@ -2,28 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Install dependencies') {
+        stage('Loo fail') {
             steps {
-                sh 'npm install'
+                sh 'echo "See on testfaili sisu" > test.txt'
             }
         }
 
-        stage('Start or restart app with PM2') {
+        stage('Näita faili') {
             steps {
-                sh '''
-                    if ! pm2 list | grep -q movie-app; then
-                      pm2 start app.js --name movie-app
-                    else
-                      pm2 restart movie-app
-                    fi
-                    pm2 save
-                '''
+                sh 'cat test.txt'
             }
         }
 
-        stage('Run test') {
+        stage('Näita minu nime') {
             steps {
-                sh 'npm test'
+                sh 'echo "Bogdan Sergachev"'
             }
         }
     }
