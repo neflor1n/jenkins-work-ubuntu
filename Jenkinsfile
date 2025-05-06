@@ -8,10 +8,10 @@ pipeline {
             }
         }
 
-        stage('Start app in background') {
+        stage('Start app with PM2') {
             steps {
-                sh 'nohup npm start > output.log 2>&1 &'
-                sleep(time: 5, unit: 'SECONDS')
+                sh 'pm2 start app.js --name movie-app || pm2 restart movie-app'
+                sh 'pm2 save'
             }
         }
 
