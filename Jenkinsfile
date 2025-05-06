@@ -10,7 +10,7 @@ pipeline {
 
         stage('Start app in background') {
             steps {
-                sh 'nohup npm start > output.log 2>&1 & disown'
+                sh 'nohup npm start > output.log 2>&1 &'
                 sleep(time: 5, unit: 'SECONDS')
             }
         }
