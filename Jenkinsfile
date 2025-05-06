@@ -12,9 +12,9 @@ pipeline {
             steps {
                 sh '''
                     if ! pm2 list | grep -q magustoit-app; then
-                      pm2 start app.js --name magustoit-app
+                      pm2 start app.js --name movie-app
                     else
-                      pm2 restart magustoit-app
+                      pm2 restart movie-app
                     fi
                     pm2 save
                 '''
