@@ -2,21 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Loo fail') {
+        stage('Install dependencies') {
             steps {
-                sh 'echo "See on testfaili sisu" > test.txt'
+                sh 'npm install'
             }
         }
 
-        stage('Näita faili') {
+        stage('Start Express app via PM2') {
             steps {
-                sh 'cat test.txt'
-            }
-        }
-
-        stage('Näita minu nime') {
-            steps {
-                sh 'echo "Bogdan Sergachev"'
+                sh '''
+                    if ! pm2 list | grep -q magustoit-app; then
+                      pm2 start app.js --name magustoit-app
+                    else
+                      pm2 restart magustoit-app
+                    fi
+                    pm2 save
+                '''
             }
         }
     }
