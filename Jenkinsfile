@@ -8,14 +8,14 @@ pipeline {
             }
         }
 
-        stage('Start application') {
+        stage('Start app in background') {
             steps {
-                sh 'nohup npm start &'
+                sh 'nohup npm start > output.log 2>&1 & disown'
                 sleep(time: 5, unit: 'SECONDS')
             }
         }
 
-        stage('Run tests') {
+        stage('Run test') {
             steps {
                 sh 'npm test'
             }
