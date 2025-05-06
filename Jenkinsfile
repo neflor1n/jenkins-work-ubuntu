@@ -8,10 +8,16 @@ pipeline {
             }
         }
 
-        stage('Start app with PM2') {
+        stage('Start or restart app with PM2') {
             steps {
-                sh 'pm2 start app.js --name movie-app || pm2 restart movie-app'
-                sh 'pm2 save'
+                sh '''
+                    if ! pm2 list | grep -q movie-app; then
+                      pm2 start app.js --name movie-app
+                    else
+                      pm2 restart movie-app
+                    fi
+                    pm2 save
+                '''
             }
         }
 
